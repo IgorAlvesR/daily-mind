@@ -3,20 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#6366f1" />
+
     <title>MindFlow</title>
+
+    <link rel="manifest" href="manifest.json" />
+
+    <meta name="theme-color" content="#6366f1" />
 
     <style>
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: Inter, system-ui;
+        font-family: system-ui, Inter;
       }
 
       body {
         height: 100vh;
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -33,7 +37,8 @@
         border-radius: 22px;
 
         background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(25px);
+
+        backdrop-filter: blur(20px);
 
         border: 1px solid rgba(255, 255, 255, 0.1);
 
@@ -44,7 +49,7 @@
         font-size: 28px;
         font-weight: 700;
 
-        margin-bottom: 6px;
+        margin-bottom: 5px;
       }
 
       .subtitle {
@@ -55,6 +60,7 @@
       .controls {
         display: flex;
         gap: 10px;
+
         margin-bottom: 20px;
       }
 
@@ -69,7 +75,9 @@
         background: linear-gradient(45deg, #6366f1, #22c55e);
 
         color: white;
+
         font-size: 15px;
+
         cursor: pointer;
       }
 
@@ -80,15 +88,20 @@
       .quote {
         font-size: 20px;
         line-height: 1.5;
+
         margin-top: 20px;
+
         min-height: 80px;
       }
 
       .stats {
         margin-top: 20px;
+
         display: flex;
         justify-content: space-between;
+
         opacity: 0.6;
+
         font-size: 14px;
       }
 
@@ -96,9 +109,11 @@
         margin-top: 25px;
 
         max-height: 120px;
+
         overflow: auto;
 
         font-size: 13px;
+
         opacity: 0.6;
       }
 
@@ -111,10 +126,11 @@
   <body>
     <div class="app">
       <div class="title">✨ MindFlow</div>
+
       <div class="subtitle">Afirmações inteligentes ao longo do dia</div>
 
       <div class="controls">
-        <button id="start">Ativar</button>
+        <button id="start">Ativar notificações</button>
 
         <button class="secondary" id="manual">Nova frase</button>
       </div>
@@ -131,17 +147,13 @@
     </div>
 
     <script>
-      /* =========================
-CONFIG
-========================= */
+      /* CONFIG */
 
       const CONFIG = {
-        INTERVAL: 1000 * 60,
+        INTERVAL: 1000 * 60 * 20,
       };
 
-      /* =========================
-AFIRMAÇÕES
-========================= */
+      /* FRASES */
 
       class PhraseEngine {
         constructor() {
@@ -177,22 +189,7 @@ AFIRMAÇÕES
             "Eu opero probabilidades, não emoções.",
             "Eu espero as melhores oportunidades.",
             "Eu sou paciente no mercado.",
-
-            "Grandes resultados exigem consistência.",
-            "O progresso vem da repetição.",
-            "Disciplina cria liberdade.",
-            "O futuro pertence aos persistentes.",
-            "A clareza surge na ação.",
-            "Pequenos hábitos mudam destinos.",
-            "O foco cria momentum.",
-            "A consistência vence a procrastinação.",
           ];
-
-          // duplicar para gerar centenas
-
-          for (let i = 0; i < 20; i++) {
-            this.phrases = [...this.phrases, ...this.phrases];
-          }
         }
 
         random() {
@@ -200,9 +197,7 @@ AFIRMAÇÕES
         }
       }
 
-      /* =========================
-NOTIFICAÇÕES
-========================= */
+      /* NOTIFICATION */
 
       class NotificationManager {
         static async request() {
@@ -214,15 +209,11 @@ NOTIFICAÇÕES
         }
 
         static send(message) {
-          new Notification("Afirmação ✨", {
-            body: message,
-          });
+          new Notification("Afirmação ✨", { body: message });
         }
       }
 
-      /* =========================
-APP
-========================= */
+      /* APP */
 
       class MindFlow {
         constructor() {
@@ -271,9 +262,7 @@ APP
         }
       }
 
-      /* =========================
-INIT
-========================= */
+      /* INIT */
 
       const app = new MindFlow();
 
@@ -288,6 +277,12 @@ INIT
       document.getElementById("manual").onclick = () => {
         app.send();
       };
+
+      /* SERVICE WORKER */
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js");
+      }
     </script>
   </body>
 </html>
