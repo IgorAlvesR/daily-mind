@@ -228,14 +228,6 @@
       document.getElementById("manual").onclick = () => {
         app.send();
       };
-
-      /* ATIVAR ONESIGNAL */
-
-      document.getElementById("start").onclick = () => {
-        OneSignal.push(function () {
-          OneSignal.showSlidedownPrompt();
-        });
-      };
     </script>
   </body>
 </html>
