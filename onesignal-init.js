@@ -6,8 +6,8 @@ OneSignal.push(async function () {
     appId: "b4765cb0-2721-47bc-88ce-0610578ee799",
   });
 
-  OneSignal.on('subscriptionChange', function (isSubscribed) {
-    console.log("Subscription:", isSubscribed);
+  OneSignal.Notifications.addEventListener("permissionChange", (permission) => {
+    console.log("Permissão mudou:", permission);
   });
 
 });
