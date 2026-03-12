@@ -7,7 +7,6 @@
     <title>MindFlow</title>
 
     <link rel="manifest" href="manifest.json" />
-
     <meta name="theme-color" content="#6366f1" />
 
     <style>
@@ -20,35 +19,26 @@
 
       body {
         height: 100vh;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
-
         color: white;
       }
 
       .app {
         width: 460px;
         padding: 40px;
-
         border-radius: 22px;
-
         background: rgba(255, 255, 255, 0.06);
-
         backdrop-filter: blur(20px);
-
         border: 1px solid rgba(255, 255, 255, 0.1);
-
         box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
       }
 
       .title {
         font-size: 28px;
         font-weight: 700;
-
         margin-bottom: 5px;
       }
 
@@ -60,24 +50,17 @@
       .controls {
         display: flex;
         gap: 10px;
-
         margin-bottom: 20px;
       }
 
       button {
         flex: 1;
-
         border: none;
         border-radius: 12px;
-
         padding: 14px;
-
         background: linear-gradient(45deg, #6366f1, #22c55e);
-
         color: white;
-
         font-size: 15px;
-
         cursor: pointer;
       }
 
@@ -88,32 +71,23 @@
       .quote {
         font-size: 20px;
         line-height: 1.5;
-
         margin-top: 20px;
-
         min-height: 80px;
       }
 
       .stats {
         margin-top: 20px;
-
         display: flex;
         justify-content: space-between;
-
         opacity: 0.6;
-
         font-size: 14px;
       }
 
       .history {
         margin-top: 25px;
-
         max-height: 120px;
-
         overflow: auto;
-
         font-size: 13px;
-
         opacity: 0.6;
       }
 
@@ -183,16 +157,6 @@
             "Eu sou resiliente diante das dificuldades.",
             "Eu sou consistente nas minhas ações.",
             "Eu sou responsável pelas minhas escolhas.",
-            "Eu sou uma pessoa que executa o que planeja.",
-            "Eu sou paciente com meu progresso.",
-            "Eu sou capaz de construir resultados extraordinários.",
-            "Eu sou persistente mesmo quando é difícil.",
-            "Eu sou disciplinado com minhas metas.",
-            "Eu sou alguém que evolui todos os dias.",
-            "Eu sou forte e determinado.",
-            "Eu sou capaz de conquistar meus sonhos.",
-            "Eu sou concentrado e eficiente.",
-            "Eu sou capaz de transformar desafios em oportunidades.",
 
             "Eu sou um trader disciplinado.",
             "Eu sou paciente ao esperar as melhores oportunidades.",
@@ -204,38 +168,11 @@
             "Eu sou disciplinado para aceitar pequenas perdas.",
             "Eu sou capaz de operar com clareza e controle.",
             "Eu sou um operador paciente e estratégico.",
-
-            "Eu sou alguém que constrói grandes resultados com pequenos passos.",
-            "Eu sou capaz de criar oportunidades.",
-            "Eu sou uma pessoa que age.",
-            "Eu sou comprometido com a excelência.",
-            "Eu sou consistente no que faço.",
-            "Eu sou alguém que termina o que começa.",
-            "Eu sou responsável pelo meu crescimento.",
-            "Eu sou disciplinado com meu tempo.",
-            "Eu sou focado na evolução contínua.",
-            "Eu sou capaz de criar um futuro extraordinário.",
           ];
         }
 
         random() {
           return this.phrases[Math.floor(Math.random() * this.phrases.length)];
-        }
-      }
-
-      /* NOTIFICATION */
-
-      class NotificationManager {
-        static async request() {
-          if (!("Notification" in window)) return false;
-
-          const permission = await Notification.requestPermission();
-
-          return permission === "granted";
-        }
-
-        static send(message) {
-          new Notification("Afirmação ✨", { body: message });
         }
       }
 
@@ -251,18 +188,8 @@
           this.history = [];
         }
 
-        start() {
-          this.send();
-
-          setInterval(() => {
-            this.send();
-          }, CONFIG.INTERVAL);
-        }
-
         send() {
           const phrase = this.engine.random();
-
-          NotificationManager.send(phrase);
 
           this.count++;
           this.streak++;
@@ -274,9 +201,7 @@
 
         render(phrase) {
           document.getElementById("quote").innerText = phrase;
-
           document.getElementById("count").innerText = this.count;
-
           document.getElementById("streak").innerText = this.streak;
 
           const historyEl = document.getElementById("history");
@@ -292,27 +217,19 @@
 
       const app = new MindFlow();
 
-      document.getElementById("start").onclick = async () => {
-        OneSignal.push(function () {
-          OneSignal.showSlidedownPrompt();
-        });
-        const granted = await NotificationManager.request();
-
-        if (!granted) return;
-
-        app.start();
-      };
-
       document.getElementById("manual").onclick = () => {
         app.send();
       };
 
-      /* SERVICE WORKER */
+      /* ATIVAR ONESIGNAL */
 
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("service-worker.js");
-      }
+      document.getElementById("start").onclick = () => {
+        OneSignal.push(function () {
+          OneSignal.showSlidedownPrompt();
+        });
+      };
     </script>
-    <script src="onsignal.js"></script>
+
+    <script src="onesignal-init.js"></script>
   </body>
 </html>
